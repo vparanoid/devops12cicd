@@ -6,4 +6,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: docker build -t test-image ./server --file ./server/dockerfile
+      - run: >- '
+             docker run -d 
+             --name app-server8000
+             -p 8000:8000 
+             --restart unless-stopped 
+             test-image'
+      - run: docker ps -a
       - run: 'curl 127.0.0.1:8000'
